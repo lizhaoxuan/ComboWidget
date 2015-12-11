@@ -17,6 +17,8 @@ public class EmbedActivity extends BaseComboActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_embed);
 
+        super.setTitle("哈哈");
+
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);

@@ -53,8 +53,12 @@ public class BaseComboActivity extends AppCompatActivity {
                 .build();
     }
 
-    public void onCreateCustomToolBar(android.support.v7.widget.Toolbar toolbar){
+    public void onCreateCustomToolBar(Toolbar toolbar){
         toolbar.setContentInsetsRelative(0, 0);
+    }
+
+    public void setTitle(String title){
+        getSupportActionBar().setTitle(title);
     }
 
 

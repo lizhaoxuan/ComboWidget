@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,14 @@ import java.util.ArrayList;
  * TopWidget     //顶部嵌入式通知消息
  * UserView    //真正用户布局内容
  * BottomWidget   //底部嵌入View
- * <p/>
+ * <p>
  * }
  * NoDataTips(match,match,gone)   //空数据提示控件
  * ErrorTips(match,match,gone)    //错误提示控件
  * ...
  * Loading(match,match,gone)      //loading
  * }
- * <p/>
+ * <p>
  * Tips:
  * 纯静态页面可直接传入布局id，其他建议嵌入控件采用自定义组件
  * 接收参数 int or View
@@ -64,6 +65,8 @@ public class EmbedUiManager {
     /*底部控件列表*/
     private ArrayList<View> bottomWidgetArray;
 
+    private boolean isShowTopWidget = false ;
+
 
     /*
     * 两个属性
@@ -75,17 +78,16 @@ public class EmbedUiManager {
             R.attr.actionBarSize
     };
 
-    private EmbedUiManager(Context context, View userView, Toolbar toolbar, View topWidget,
+    private EmbedUiManager(Context context, FrameLayout rootView, View userView, Toolbar toolbar, View topWidget,
                            ArrayList<View> bottomWidgetArray, ArrayList<View> coverWidgetArray) {
         this.context = context;
+        this.rootView = rootView;
         this.userView = userView;
         this.toolbar = toolbar;
         this.topWidget = topWidget;
         this.bottomWidgetArray = bottomWidgetArray;
         this.coverWidgetArray = coverWidgetArray;
 
-        //初始化根布局
-        initRootView();
 
         //添加内容布局
         initContentLayout();
@@ -96,20 +98,13 @@ public class EmbedUiManager {
         addCoverWidget();
     }
 
-    private void initRootView() {
-        //直接创建一个帧布局，作为视图容器的父容器
-        rootView = new FrameLayout(context);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        rootView.setLayoutParams(params);
-    }
-
     private void initContentLayout() {
         contentLayout = new LinearLayout(context);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         if (toolbar != null) {
+
             TypedArray typedArray = context.getTheme().obtainStyledAttributes(ATTRS);
             //获取主题中定义的悬浮标志
             boolean overly = typedArray.getBoolean(0, false);
@@ -212,9 +207,10 @@ public class EmbedUiManager {
      * 考虑用户体验，TopWidget通过向上偏移实现隐藏，所以其显示隐藏交由PackageHelper负责
      */
     public void showTopWidget() {
-        if (topWidget == null) {
+        if (topWidget == null || isShowTopWidget) {
             return;
         }
+        isShowTopWidget = true;
         int height = topWidget.getHeight();
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(topWidget,
                 "y", -height, 0f);
@@ -222,16 +218,16 @@ public class EmbedUiManager {
                 "y", 0f, height);
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(anim1).with(anim2);
-        //animSet.play(anim2).with(anim1);
-        animSet.setDuration(1000);
+        animSet.setDuration(700);
         animSet.start();
 
     }
 
     public void hideTopWidget() {
-        if (topWidget == null) {
+        if (topWidget == null || !isShowTopWidget) {
             return;
         }
+        isShowTopWidget = false;
         int height = topWidget.getHeight();
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(topWidget,
                 "y", 0f, -height);
@@ -239,8 +235,7 @@ public class EmbedUiManager {
                 "y", height, 0f);
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(anim1).with(anim2);
-        //animSet.play(anim2).with(anim1);
-        animSet.setDuration(1000);
+        animSet.setDuration(700);
         animSet.start();
     }
 
@@ -248,6 +243,8 @@ public class EmbedUiManager {
         private Context context;
         /*视图构造器*/
         private LayoutInflater inflater;
+        /*根布局*/
+        private FrameLayout rootView;
         /*用户定义的view*/
         private View userView;
         /*toolbar*/
@@ -264,6 +261,15 @@ public class EmbedUiManager {
             this.context = context;
             inflater = LayoutInflater.from(context);
             userView = inflater.inflate(layoutId, null);
+            initRootView();
+        }
+
+        private void initRootView() {
+            //直接创建一个帧布局，作为视图容器的父容器
+            rootView = new FrameLayout(context);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT);
+            rootView.setLayoutParams(params);
         }
 
         private ArrayList<View> getCoverWidgetArray() {
@@ -283,7 +289,7 @@ public class EmbedUiManager {
         /*------------- 设置ToolBar -----------------------*/
 
         public Builder setToolbar(int layoutId, int viewId) {
-            View view = inflater.inflate(layoutId, null);
+            View view = inflater.inflate(layoutId, rootView);
             toolbar = (Toolbar) view.findViewById(viewId);
             return this;
         }
@@ -372,7 +378,7 @@ public class EmbedUiManager {
         }
 
         public EmbedUiManager build() {
-            return new EmbedUiManager(context, userView, toolbar, topWidget,
+            return new EmbedUiManager(context, rootView, userView, toolbar, topWidget,
                     bottomWidgetArray, coverWidgetArray);
         }
     }

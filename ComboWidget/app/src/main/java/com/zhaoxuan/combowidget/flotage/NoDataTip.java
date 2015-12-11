@@ -114,6 +114,9 @@ public class NoDataTip {
     }
 
     public boolean isShowing() {
+        if (popupWindow == null){
+            return false;
+        }
         return popupWindow.isShowing();
     }
 
