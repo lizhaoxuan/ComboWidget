@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/yellow_tag_2"
+    android:id="@+id/popLayout">
+
+    <TextView
+		android:id="@+id/tipsText"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+        android:textColor="@color/black_tag_3"
+		android:text="这是Tips提示信息，啊啊啊"/>
+    
+</RelativeLayout>
