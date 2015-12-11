@@ -92,63 +92,65 @@ public class EmbedUiManager {
         //添加内容布局
         initContentLayout();
 
-        addTopWidget();
-        addUserView();
-        addBottomWidget();
-        addCoverWidget();
+
     }
 
     private void initContentLayout() {
-        contentLayout = new LinearLayout(context);
-
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //如果这三个控件都不存在，则不需要LinearLayout,减少一层布局
+        if(topWidget == null && bottomWidgetArray == null &&toolbar ==null){
+            addUserView(rootView);
+            addCoverWidget(params);
+        }else {
+            if (toolbar != null) {
+                TypedArray typedArray = context.getTheme().obtainStyledAttributes(ATTRS);
+                //获取主题中定义的悬浮标志
+                boolean overly = typedArray.getBoolean(0, false);
+                //获取主题中定义的toolbar的高度
+                int toolBarSize = (int) typedArray.getDimension(1, (int) context.getResources().getDimension(R.dimen.abc_action_bar_default_height_material));
+                typedArray.recycle();
+                //如果是悬浮状态，则不需要设置间距
+                params.topMargin = overly ? 0 : toolBarSize;
+            }
 
-        if (toolbar != null) {
+            contentLayout = new LinearLayout(context);
+            contentLayout.setLayoutParams(params);
+            contentLayout.setOrientation(LinearLayout.VERTICAL);
+            rootView.addView(contentLayout);
 
-            TypedArray typedArray = context.getTheme().obtainStyledAttributes(ATTRS);
-            //获取主题中定义的悬浮标志
-            boolean overly = typedArray.getBoolean(0, false);
-            //获取主题中定义的toolbar的高度
-            int toolBarSize = (int) typedArray.getDimension(1, (int) context.getResources().getDimension(R.dimen.abc_action_bar_default_height_material));
-            typedArray.recycle();
-            //如果是悬浮状态，则不需要设置间距
-            params.topMargin = overly ? 0 : toolBarSize;
+            addTopWidget(contentLayout);
+            addUserView(contentLayout);
+            addBottomWidget(contentLayout);
+            addCoverWidget(params);
         }
-
-        contentLayout.setLayoutParams(params);
-        contentLayout.setOrientation(LinearLayout.VERTICAL);
-
-        rootView.addView(contentLayout);
     }
 
-
-    private void addTopWidget() {
+    private void addTopWidget(ViewGroup viewGroup) {
         if (topWidget != null) {
             LinearLayout.LayoutParams topTipsParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.abc_action_bar_default_height_material));
             topTipsParams.topMargin = -(int) context.getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
-            contentLayout.addView(topWidget, topTipsParams);
+            viewGroup.addView(topWidget, topTipsParams);
         }
     }
 
-    private void addUserView() {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        contentLayout.addView(userView, params);
+    private void addUserView(ViewGroup viewGroup) {
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        viewGroup.addView(userView, params);
     }
 
-    private void addBottomWidget() {
+    private void addBottomWidget(ViewGroup viewGroup) {
         if (bottomWidgetArray != null) {
             for (View view : bottomWidgetArray) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                contentLayout.addView(view, params);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                viewGroup.addView(view, params);
                 view.setVisibility(View.GONE);
             }
         }
     }
 
-    private void addCoverWidget() {
+    private void addCoverWidget(FrameLayout.LayoutParams params) {
         if (coverWidgetArray != null) {
             for (View view : coverWidgetArray) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 rootView.addView(view, params);
                 view.setVisibility(View.GONE);
             }

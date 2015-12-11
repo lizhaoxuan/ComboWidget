@@ -57,7 +57,7 @@ public class BaseComboActivity extends AppCompatActivity {
         toolbar.setContentInsetsRelative(0, 0);
     }
 
-    public void setTitle(String title){
+    public void setTitile(String title){
         getSupportActionBar().setTitle(title);
     }
 
