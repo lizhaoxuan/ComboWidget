@@ -10,13 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhaoxuan.combowidget.R;
+import com.zhaoxuan.combowidget.flotage.NoDataTip;
 
 
 /**
  * 自定义控件 NoDataTips
  * Created by lizhaoxuan on 15/12/4.
  */
-public class NoDataTips extends LinearLayout {
+public class NoDataTips extends LinearLayout implements IEmbedView{
     private TextView textView;
     private ImageView imageView;
 
@@ -69,12 +70,23 @@ public class NoDataTips extends LinearLayout {
         return textView.getText().toString();
     }
 
-    public void setText(String tip) {
+    public NoDataTips setText(String tip) {
         textView.setText(tip);
+        return this;
     }
 
-    public void setListener(NoDataTipListener listener) {
+    public NoDataTips setListener(NoDataTipListener listener) {
         this.listener = listener;
+        return this;
+    }
+
+    @Override
+    public void show(){
+        this.setVisibility(VISIBLE);
+    }
+    @Override
+    public void hide(){
+        this.setVisibility(GONE);
     }
 
     public interface NoDataTipListener {

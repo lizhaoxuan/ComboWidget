@@ -175,9 +175,9 @@ public class EmbedUiManager {
         return userView;
     }
 
-    public View getViewForCoverWidget(int position) {
+    public IEmbedView getViewForCoverWidget(int position) {
         try {
-            return coverWidgetArray.get(position);
+            return (IEmbedView)coverWidgetArray.get(position);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
@@ -189,9 +189,9 @@ public class EmbedUiManager {
         return coverWidgetArray;
     }
 
-    public View getViewForBottomWidget(int position) {
+    public IEmbedView getViewForBottomWidget(int position) {
         try {
-            return coverWidgetArray.get(position);
+            return (IEmbedView)coverWidgetArray.get(position);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
@@ -309,7 +309,7 @@ public class EmbedUiManager {
 
         /*--------- 添加底部嵌入式 View -------------*/
 
-        public Builder addBottomWidget(int[] viewIds) {
+        public Builder addBottomWidgets(int[] viewIds) {
             bottomWidgetArray = getBottomWidgetArray();
 
             int length = viewIds.length;
@@ -319,7 +319,7 @@ public class EmbedUiManager {
             return this;
         }
 
-        public Builder addBottomWidget(View[] views) {
+        public Builder addBottomWidgets(View[] views) {
             bottomWidgetArray = getBottomWidgetArray();
 
             int length = views.length;
@@ -329,14 +329,14 @@ public class EmbedUiManager {
             return this;
         }
 
-        public Builder addBottomWidget(View view) {
+        public Builder addBottomWidgets(View view) {
             bottomWidgetArray = getBottomWidgetArray();
 
             bottomWidgetArray.add(view);
             return this;
         }
 
-        public Builder addBottomWidget(int viewId) {
+        public Builder addBottomWidgets(int viewId) {
             bottomWidgetArray = getBottomWidgetArray();
 
             bottomWidgetArray.add(inflater.inflate(viewId, null));
@@ -345,7 +345,7 @@ public class EmbedUiManager {
 
         /*--------- 添加覆盖式View -------------*/
 
-        public Builder addCoverWidgetArray(int[] viewIds) {
+        public Builder addCoverWidgets(int[] viewIds) {
             coverWidgetArray = getCoverWidgetArray();
 
             int length = viewIds.length;
@@ -355,7 +355,7 @@ public class EmbedUiManager {
             return this;
         }
 
-        public Builder addCoverWidgetArray(View[] views) {
+        public Builder addCoverWidgets(View[] views) {
             coverWidgetArray = getCoverWidgetArray();
 
             int length = views.length;
@@ -365,14 +365,14 @@ public class EmbedUiManager {
             return this;
         }
 
-        public Builder addCoverWidgetArray(View view) {
+        public Builder addCoverWidgets(View view) {
             coverWidgetArray = getCoverWidgetArray();
 
             coverWidgetArray.add(view);
             return this;
         }
 
-        public Builder addCoverWidgetArray(int viewId) {
+        public Builder addCoverWidgets(int viewId) {
             coverWidgetArray = getCoverWidgetArray();
 
             coverWidgetArray.add(inflater.inflate(viewId, null));

@@ -9,4 +9,7 @@
         <attr name="android:text" />
     </declare-styleable>
 
+    <declare-styleable name="LoadingView">
+        <attr name="android:text" />
+    </declare-styleable>
 </resources>

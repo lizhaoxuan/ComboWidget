@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.zhaoxuan.combowidget.embed.EmbedUiManager;
+import com.zhaoxuan.combowidget.embed.LoadingView;
 import com.zhaoxuan.combowidget.embed.NoDataTips;
 import com.zhaoxuan.combowidget.embed.TopToast;
 
@@ -48,8 +49,7 @@ public class BaseComboActivity extends AppCompatActivity {
         embedUiManager = new EmbedUiManager.Builder(this,layoutResID)
                 .setToolbar(R.layout.widget_toolbar,R.id.id_tool_bar)
                 .setTopWidget(new TopToast(this))
-                .addCoverWidgetArray(new View[]{new NoDataTips(this)})
-                .addCoverWidgetArray(new int[]{R.layout.widget_loading})
+                .addCoverWidgets(new View[]{new NoDataTips(this),new LoadingView(this)})
                 .build();
     }
 
@@ -57,7 +57,7 @@ public class BaseComboActivity extends AppCompatActivity {
         toolbar.setContentInsetsRelative(0, 0);
     }
 
-    public void setTitile(String title){
+    public void setTitle(String title){
         getSupportActionBar().setTitle(title);
     }
 
@@ -69,19 +69,19 @@ public class BaseComboActivity extends AppCompatActivity {
      */
 
     protected void showNoDataTips(){
-        embedUiManager.getViewForCoverWidget(0).setVisibility(View.VISIBLE);
+        embedUiManager.getViewForCoverWidget(0).show();
     }
 
     protected void hideNoDataTips(){
-        embedUiManager.getViewForCoverWidget(0).setVisibility(View.GONE);
+        embedUiManager.getViewForCoverWidget(0).hide();
     }
 
     protected void showLoading(){
-        embedUiManager.getViewForCoverWidget(1).setVisibility(View.VISIBLE);
+        embedUiManager.getViewForCoverWidget(1).show();
     }
 
     protected void hideLoading(){
-        embedUiManager.getViewForCoverWidget(1).setVisibility(View.GONE);
+        embedUiManager.getViewForCoverWidget(1).hide();
     }
 
 }
