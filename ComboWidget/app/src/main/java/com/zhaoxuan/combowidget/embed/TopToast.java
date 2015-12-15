@@ -52,7 +52,12 @@ public class TopToast extends RelativeLayout {
     public String getText(){
         return textView.getText().toString();
     }
-    public void setText(String tip){
+    public TopToast setText(String tip){
         textView.setText(tip);
+        return this;
+    }
+    public TopToast setBackground(int color){
+        this.setBackgroundColor(color);
+        return this;
     }
 }

@@ -226,19 +226,20 @@ public class EmbedUiManager {
     }
 
     public void hideTopWidget() {
-        if (topWidget == null || !isShowTopWidget) {
-            return;
-        }
-        isShowTopWidget = false;
-        int height = topWidget.getHeight();
-        ObjectAnimator anim1 = ObjectAnimator.ofFloat(topWidget,
-                "y", 0f, -height);
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(userView,
-                "y", height, 0f);
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.play(anim1).with(anim2);
-        animSet.setDuration(700);
-        animSet.start();
+//        if (topWidget == null || !isShowTopWidget) {
+//            return;
+//        }
+//        isShowTopWidget = false;
+//        int height = topWidget.getHeight();
+//        ObjectAnimator anim1 = ObjectAnimator.ofFloat(topWidget,
+//                "y", 0f, -height);
+//        ObjectAnimator anim2 = ObjectAnimator.ofFloat(userView,
+//                "y", height, 0f);
+//        AnimatorSet animSet = new AnimatorSet();
+//        animSet.play(anim1).with(anim2);
+//        animSet.setDuration(700);
+//        animSet.start();
+        ((ScrollTopView)topWidget).showNext();
     }
 
     public static class Builder {

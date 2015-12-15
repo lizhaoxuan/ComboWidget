@@ -8,6 +8,7 @@ import android.view.View;
 import com.zhaoxuan.combowidget.embed.EmbedUiManager;
 import com.zhaoxuan.combowidget.embed.LoadingView;
 import com.zhaoxuan.combowidget.embed.NoDataTips;
+import com.zhaoxuan.combowidget.embed.ScrollTopView;
 import com.zhaoxuan.combowidget.embed.TopToast;
 
 /**
@@ -48,8 +49,9 @@ public class BaseComboActivity extends AppCompatActivity {
     protected void initPackageHelper(int layoutResID){
         embedUiManager = new EmbedUiManager.Builder(this,layoutResID)
                 .setToolbar(R.layout.widget_toolbar,R.id.id_tool_bar)
-                .setTopWidget(new TopToast(this))
-                .addCoverWidgets(new View[]{new NoDataTips(this),new LoadingView(this)})
+                //.setTopWidget(new TopToast(this))
+                .setTopWidget(new ScrollTopView(this))
+                .addCoverWidgets(new View[]{new NoDataTips(this), new LoadingView(this)})
                 .build();
     }
 
