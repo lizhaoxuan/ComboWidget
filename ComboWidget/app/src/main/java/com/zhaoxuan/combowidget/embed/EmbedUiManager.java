@@ -175,9 +175,9 @@ public class EmbedUiManager {
         return userView;
     }
 
-    public IEmbedView getViewForCoverWidget(int position) {
+    public View getViewForCoverWidget(int position) {
         try {
-            return (IEmbedView)coverWidgetArray.get(position);
+            return coverWidgetArray.get(position);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
@@ -189,9 +189,9 @@ public class EmbedUiManager {
         return coverWidgetArray;
     }
 
-    public IEmbedView getViewForBottomWidget(int position) {
+    public View getViewForBottomWidget(int position) {
         try {
-            return (IEmbedView)coverWidgetArray.get(position);
+            return coverWidgetArray.get(position);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;

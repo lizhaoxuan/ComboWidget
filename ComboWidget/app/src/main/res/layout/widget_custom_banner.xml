@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:descendantFocusability="afterDescendants"
     android:padding="10dp">
 
     <TextView

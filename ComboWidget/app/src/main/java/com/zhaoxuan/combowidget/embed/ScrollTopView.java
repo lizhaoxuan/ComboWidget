@@ -52,6 +52,7 @@ public class ScrollTopView extends LinearLayout {
         this.addView(topToastArray[1], params1);
         this.addView(topToastArray[2], params1);
         this.addView(topToastArray[3], params1);
+
         length = topToastArray.length;
         Log.d("TAG","first:"+topToast1.getHeight());
     }

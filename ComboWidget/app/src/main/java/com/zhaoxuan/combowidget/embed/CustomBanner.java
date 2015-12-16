@@ -3,8 +3,10 @@ package com.zhaoxuan.combowidget.embed;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhaoxuan.combowidget.R;
 
@@ -21,11 +23,24 @@ public class CustomBanner extends LinearLayout {
         super(context);
         init(context, null);
     }
-    private void init(Context context, AttributeSet attrs) {
+    private void init(final Context context, AttributeSet attrs) {
         LayoutInflater.from(context).inflate(R.layout.widget_custom_banner, this, true);
         removeText = (TextView) findViewById(R.id.removeText);
         tipsText = (TextView) findViewById(R.id.tipsText);
         enterText = (TextView) findViewById(R.id.enterText);
+
+        removeText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"removeText",Toast.LENGTH_SHORT).show();
+            }
+        });
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"layout",Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
