@@ -9,7 +9,7 @@ import com.zhaoxuan.combowidget.embed.EmbedUiManager;
 import com.zhaoxuan.combowidget.embed.LoadingView;
 import com.zhaoxuan.combowidget.embed.NoDataTips;
 import com.zhaoxuan.combowidget.embed.ScrollTopView;
-import com.zhaoxuan.combowidget.embed.TopToast;
+import com.zhaoxuan.combowidget.embed.banner.ScrollBanner;
 
 /**
  * 嵌入式控件 父Activity
@@ -49,8 +49,8 @@ public class BaseComboActivity extends AppCompatActivity {
     protected void initPackageHelper(int layoutResID){
         embedUiManager = new EmbedUiManager.Builder(this,layoutResID)
                 .setToolbar(R.layout.widget_toolbar,R.id.id_tool_bar)
-                //.setTopWidget(new TopToast(this))
-                .setTopWidget(new ScrollTopView(this))
+                .setTopWidget(new ScrollBanner(this))
+                //.setTopWidget(new ScrollTopView(this))
                 .addCoverWidgets(new View[]{new NoDataTips(this), new LoadingView(this)})
                 .build();
     }
@@ -71,19 +71,19 @@ public class BaseComboActivity extends AppCompatActivity {
      */
 
     protected void showNoDataTips(){
-        embedUiManager.getViewForCoverWidget(0).show();
+        embedUiManager.getViewForCoverWidget(0).setVisibility(View.VISIBLE);
     }
 
     protected void hideNoDataTips(){
-        embedUiManager.getViewForCoverWidget(0).hide();
+        embedUiManager.getViewForCoverWidget(0).setVisibility(View.GONE);
     }
 
     protected void showLoading(){
-        embedUiManager.getViewForCoverWidget(1).show();
+        embedUiManager.getViewForCoverWidget(1).setVisibility(View.VISIBLE);
     }
 
     protected void hideLoading(){
-        embedUiManager.getViewForCoverWidget(1).hide();
+        embedUiManager.getViewForCoverWidget(1).setVisibility(View.GONE);
     }
 
 }

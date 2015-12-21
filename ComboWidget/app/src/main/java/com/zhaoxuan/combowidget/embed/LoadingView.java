@@ -12,7 +12,7 @@ import com.zhaoxuan.combowidget.R;
 /**
  * Created by lizhaoxuan on 15/12/14.
  */
-public class LoadingView extends RelativeLayout implements IEmbedView {
+public class LoadingView extends RelativeLayout {
     private TextView loading_msg;
 
     public LoadingView(Context context) {
@@ -45,20 +45,5 @@ public class LoadingView extends RelativeLayout implements IEmbedView {
     public LoadingView setMsg(String msg) {
         loading_msg.setText(msg);
         return this;
-    }
-
-    @Override
-    public void show() {
-        if (loading_msg.getText() == null || loading_msg.getText().toString().equals("")) {
-            loading_msg.setVisibility(GONE);
-        } else {
-            loading_msg.setVisibility(VISIBLE);
-        }
-        this.setVisibility(VISIBLE);
-    }
-
-    @Override
-    public void hide() {
-        this.setVisibility(GONE);
     }
 }

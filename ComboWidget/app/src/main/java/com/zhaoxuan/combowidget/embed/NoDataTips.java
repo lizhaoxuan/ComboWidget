@@ -17,7 +17,7 @@ import com.zhaoxuan.combowidget.flotage.NoDataTip;
  * 自定义控件 NoDataTips
  * Created by lizhaoxuan on 15/12/4.
  */
-public class NoDataTips extends LinearLayout implements IEmbedView{
+public class NoDataTips extends LinearLayout {
     private TextView textView;
     private ImageView imageView;
 
@@ -78,15 +78,6 @@ public class NoDataTips extends LinearLayout implements IEmbedView{
     public NoDataTips setListener(NoDataTipListener listener) {
         this.listener = listener;
         return this;
-    }
-
-    @Override
-    public void show(){
-        this.setVisibility(VISIBLE);
-    }
-    @Override
-    public void hide(){
-        this.setVisibility(GONE);
     }
 
     public interface NoDataTipListener {
